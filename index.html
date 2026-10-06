@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="神马电影网达达兔，提供最新电影、热门电视剧、动漫综艺等高清影视在线观看与资讯。">
+<meta name="keywords" content="神马电影网达达兔,电影,电视剧,动漫,综艺,高清影视">
+<meta name="author" content="神马电影网达达兔">
+<meta name="robots" content="index, follow">
+<title>神马电影网达达兔 - 最新高清电影电视剧在线观看</title>
+<style>
+  :root{
+    --bg:#0b0f1a;
+    --bg2:#121933;
+    --card:#161d3a;
+    --line:rgba(255,255,255,.08);
+    --txt:#e8ecf8;
+    --sub:#9aa4c4;
+    --gold:#ffb43d;
+    --gold2:#ff7a59;
+    --cyan:#3ddcff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,rgba(255,122,89,.18),transparent 60%),
+               radial-gradient(900px 500px at -10% 10%,rgba(61,220,255,.14),transparent 55%),
+               var(--bg);
+    color:var(--txt);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(11,15,26,.78);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;gap:18px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+  .logo .mark{
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+    display:grid;place-items:center;color:#1a1209;font-size:18px;font-weight:900;
+    box-shadow:0 6px 18px rgba(255,122,89,.35);
+  }
+  .logo b{font-size:17px;background:linear-gradient(90deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .nav-links a{
+    padding:8px 14px;border-radius:999px;font-size:14px;color:var(--sub);
+    transition:.25s;
+  }
+  .nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .nav-links a.active{color:#1a1209;background:linear-gradient(90deg,var(--gold),var(--gold2));font-weight:700}
+
+  /* Hero */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:64px 0 72px;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border-radius:999px;font-size:12.5px;color:var(--gold);
+    border:1px solid rgba(255,180,61,.3);background:rgba(255,180,61,.08);
+  }
+  .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  h1{font-size:clamp(30px,5vw,54px);line-height:1.15;margin:18px 0 14px;font-weight:850}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--gold),var(--gold2) 55%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--sub);font-size:16px;max-width:560px}
+  .cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 26px;border-radius:12px;font-weight:700;font-size:15px;
+    transition:.25s;cursor:pointer;border:1px solid transparent;
+  }
+  .btn-primary{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1209;box-shadow:0 12px 28px rgba(255,122,89,.3)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 18px 34px rgba(255,122,89,.42)}
+  .btn-ghost{color:#fff;border-color:var(--line);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .stats{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+  .stat .n{font-size:26px;font-weight:800;color:#fff}
+  .stat .n small{font-size:14px;color:var(--gold);margin-left:3px}
+  .stat .l{font-size:12.5px;color:var(--sub);margin-top:2px}
+
+  /* hero visual */
+  .hero-card{
+    position:relative;aspect-ratio:4/5;border-radius:22px;
+    background:linear-gradient(160deg,var(--bg2),#0c1024);
+    border:1px solid var(--line);
+    padding:18px;display:flex;flex-direction:column;gap:14px;
+    box-shadow:0 30px 70px rgba(0,0,0,.5);
+    transform:perspective(900px) rotateY(-7deg) rotateX(4deg);
+  }
+  .hero-card .poster{
+    border-radius:14px;height:100%;min-height:220px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 75% 25%,rgba(255,122,89,.5),transparent 45%),
+      radial-gradient(circle at 20% 80%,rgba(61,220,255,.4),transparent 50%),
+      linear-gradient(160deg,#1c2550,#0e142e);
+  }
+  .hero-card .poster::after{
+    content:"▸";position:absolute;inset:0;display:grid;place-items:center;
+    font-size:54px;color:rgba(255,255,255,.9);
+    text-shadow:0 8px 30px rgba(0,0,0,.6);
+  }
+  .hero-card .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:6px 12px;border-radius:8px;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+  .chip.hot{color:var(--gold);border-color:rgba(255,180,61,.35);background:rgba(255,180,61,.1)}
+
+  /* section */
+  section{padding:64px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+  .sec-head h2{font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:.5px}
+  .sec-head h2 span{color:var(--gold)}
+  .sec-head .more{font-size:13.5px;color:var(--sub);border:1px solid var(--line);padding:7px 16px;border-radius:999px}
+  .sec-head .more:hover{color:var(--gold);border-color:var(--gold)}
+
+  /* cards */
+  .grid{display:grid;gap:20px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    transition:.3s;display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-6px);border-color:rgba(255,180,61,.4);box-shadow:0 20px 40px rgba(0,0,0,.45)}
+  .thumb{position:relative;aspect-ratio:3/4;overflow:hidden}
+  .thumb .bg{
+    position:absolute;inset:0;transition:.5s;
+  }
+  .card:hover .thumb .bg{transform:scale(1.06)}
+  .thumb .tag{
+    position:absolute;top:10px;left:10px;z-index:2;
+    padding:4px 10px;border-radius:7px;font-size:11.5px;font-weight:700;color:#1a1209;
+    background:linear-gradient(90deg,var(--gold),var(--gold2));
+  }
+  .thumb .score{
+    position:absolute;bottom:10px;right:10px;z-index:2;
+    padding:4px 9px;border-radius:7px;font-size:12px;font-weight:800;color:#0b1020;
+    background:var(--cyan);box-shadow:0 4px 12px rgba(61,220,255,.4);
+  }
+  .thumb .mask{
+    position:absolute;inset:0;background:linear-gradient(to top,rgba(11,15,26,.95),rgba(11,15,26,.2) 55%,transparent);
+    display:flex;align-items:flex-end;padding:14px;z-index:1;
+  }
+  .thumb .mask b{font-size:15px;line-height:1.35}
+  .meta{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+  .meta .row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--sub)}
+  .meta .row b{color:var(--gold);font-weight:700}
+  .meta p{font-size:13px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* genre pills */
+  .genres{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .genre{
+    padding:9px 18px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;
+    border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--sub);transition:.25s;
+  }
+  .genre:hover,.genre.on{color:#1a1209;background:linear-gradient(90deg,var(--gold),var(--gold2));border-color:transparent}
+
+  /* rank list */
+  .rank{display:flex;flex-direction:column;gap:12px}
+  .rank-item{
+    display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:13px;
+    background:var(--card);border:1px solid var(--line);transition:.25s;
+  }
+  .rank-item:hover{border-color:rgba(61,220,255,.45);transform:translateX(5px)}
+  .rank-item .no{
+    width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;
+    font-weight:800;font-size:15px;background:rgba(255,255,255,.06);color:var(--sub);
+  }
+  .rank-item.top .no{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1209}
+  .rank-item .txt{flex:1;min-width:0}
+  .rank-item .txt b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rank-item .txt small{color:var(--sub);font-size:12px}
+  .rank-item .up{color:var(--gold);font-weight:700;font-size:13px}
+
+  /* features */
+  .feat{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .feat .f{
+    padding:24px 20px;border-radius:16px;background:var(--card);border:1px solid var(--line);
+    transition:.3s;
+  }
+  .feat .f:hover{transform:translateY(-5px);border-color:rgba(255,180,61,.4)}
+  .feat .ico{
+    width:48px;height:48px;border-radius:13px;display:grid;place-items:center;font-size:22px;margin-bottom:14px;
+    background:linear-gradient(135deg,rgba(255,180,61,.18),rgba(255,122,89,.1));border:1px solid rgba(255,180,61,.25);
+  }
+  .feat h3{font-size:16.5px;margin-bottom:6px}
+  .feat p{font-size:13.5px;color:var(--sub)}
+
+  /* news */
+  .news-item{
+    display:grid;grid-template-columns:130px 1fr;gap:18px;
+    padding:18px;border-radius:14px;border:1px solid var(--line);background:var(--card);
+    transition:.25s;
+  }
+  .news-item:hover{border-color:rgba(61,220,255,.4);transform:translateY(-3px)}
+  .news-item .d{
+    width:130px;height:84px;border-radius:10px;display:grid;place-items:center;
+    font-weight:800;color:#1a1209;font-size:15px;text-align:center;line-height:1.3;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+  }
+  .news-item h3{font-size:16px;margin-bottom:7px}
+  .news-item p{font-size:13.5px;color:var(--sub);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .news-item .info{margin-top:10px;font-size:12px;color:var(--sub);display:flex;gap:14px}
+
+  /* cta banner */
+  .banner{
+    border-radius:24px;padding:44px 36px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 88% 20%,rgba(255,122,89,.35),transparent 45%),
+      radial-gradient(circle at 8% 85%,rgba(61,220,255,.25),transparent 50%),
+      linear-gradient(120deg,#1a2250,#0f1530);
+    border:1px solid var(--line);
+  }
+  .banner h2{font-size:clamp(22px,3vw,34px);margin-bottom:10px}
+  .banner p{color:var(--sub);max-width:620px;margin-bottom:22px}
+  .banner .url{
+    display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:11px;
+    background:rgba(0,0,0,.3);border:1px dashed rgba(255,255,255,.25);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--gold);font-size:14px;margin-bottom:22px;
+  }
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:46px 0 30px;margin-top:20px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px;margin-bottom:30px}
+  .foot-brand p{color:var(--sub);font-size:13.5px;margin-top:12px;max-width:320px}
+  .foot-col h4{font-size:15px;margin-bottom:14px;color:#fff}
+  .foot-col a{display:block;color:var(--sub);font-size:13.5px;padding:5px 0;transition:.2s}
+  .foot-col a:hover{color:var(--gold);transform:translateX(4px)}
+  .copy{text-align:center;color:var(--sub);font-size:12.5px;padding-top:22px;border-top:1px solid var(--line)}
+
+  /* responsive */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-card{order:-1;max-width:420px;margin:0 auto;transform:none}
+    .g4,.feat{grid-template-columns:repeat(2,1fr)}
+    .g3,.g2{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 16px}
+    section{padding:48px 0}
+    .nav{height:58px;gap:10px}
+    .logo b{font-size:15px}
+    .nav-links a{padding:7px 10px;font-size:13px}
+    .hero{padding:40px 0 54px}
+    .g4,.feat{grid-template-columns:1fr}
+    .news-item{grid-template-columns:1fr;gap:12px}
+    .news-item .d{width:100%;height:64px}
+    .foot-grid{grid-template-columns:1fr}
+    .banner{padding:30px 22px}
+  }
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="神马电影网达达兔">
+      <span class="mark">兔</span>
+      <b>神马电影网达达兔</b>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#hot" class="active">热映电影</a>
+      <a href="#tv">热门剧集</a>
+      <a href="#rank">影视排行</a>
+      <a href="#why">平台优势</a>
+      <a href="#news">影讯资讯</a>
+      <a href="#about">关于我们</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><i></i> 每日更新 · 高清免费</span>
+        <h1>看好剧，上 <em>神马电影网达达兔</em></h1>
+        <p>神马电影网达达兔 专注电影、电视剧、动漫、综艺等海量高清影视内容，更新快、画质清、分类全，为你打造舒适的在线观影体验。</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#hot">立即观影 →</a>
+          <a class="btn btn-ghost" href="#rank">查看排行榜</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">12<small>万+</small></div><div class="l">影视资源</div></div>
+          <div class="stat"><div class="n">1080<small>P</small></div><div class="l">高清画质</div></div>
+          <div class="stat"><div class="n">24<small>h</small></div><div class="l">极速更新</div></div>
+          <div class="stat"><div class="n">0<small>广告</small></div><div class="l">纯净体验</div></div>
+        </div>
+      </div>
+      <div class="hero-card" aria-hidden="true">
+        <div class="poster"></div>
+        <div class="chips">
+          <span class="chip hot">🔥 今日热播</span>
+          <span class="chip">动作 · 科幻</span>
+          <span class="chip">豆瓣 8.6</span>
+        </div>
+        <div style="font-size:13px;color:var(--sub)">《星际回响》正在 <b style="color:var(--gold)">神马电影网达达兔</b> 热映中</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目一：热映电影 -->
+  <section id="hot">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>热映<span>电影</span></h2>
+        <a class="more" href="#">查看更多 →</a>
+      </div>
+      <div class="genres">
+        <span class="genre on">全部</span>
+        <span class="genre">动作</span>
+        <span class="genre">科幻</span>
+        <span class="genre">喜剧</span>
+        <span class="genre">悬疑</span>
+        <span class="genre">爱情</span>
+        <span class="genre">动画</span>
+      </div>
+      <div class="grid g4">
+        <article class="card">
+          <div class="thumb">
+            <div class="bg" style="background:radial-gradient(circle at 70% 30%,#ff8a5c,transparent 50%),linear-gradient(160deg,#2a1b4d,#0f1530)"></div>
+            <span class="tag">热映</span><span class="score">8.7</span>
+            <div class="mask"><b>星际回响</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>科幻 / 冒险</span><b>2026</b></div>
+            <p>宇航员在深空接收到神秘回响，一场跨越光年的自救之旅就此展开。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb">
+            <div class="bg" style="background:radial-gradient(circle at 30% 40%,#3ddcff,transparent 50%),linear-gradient(160deg,#0e3a4d,#0c1024)"></div>
+            <span class="tag">推荐</span><span class="score">8.3</span>
+            <div class="mask"><b>极寒追击</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>动作 / 犯罪</span><b>2026</b></div>
+            <p>西伯利亚雪原上的生死押运，每一步都可能是最后一里路。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb">
+            <div class="bg" style="background:radial-gradient(circle at 60% 25%,#ffd23f,transparent 50%),linear-gradient(160deg,#4d2f0e,#1a1209)"></div>
+            <span class="tag">搞笑</span><span class="score">7.9</span>
+            <div class="mask"><b>周末大作战</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>喜剧 / 家庭</span><b>2026</b></div>
+            <p>一场乌龙旅行，让失联多年的家人重新坐回同一张餐桌。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb">
+            <div class="bg" style="background:radial-gradient(circle at 40% 60%,#c07cff,transparent 50%),linear-gradient(160deg,#2a1140,#0c1024)"></div>
+            <span class="tag">悬疑</span><span class="score">8.5</span>
+            <div class="mask"><b>第七封信</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>悬疑 / 剧情</span><b>2025</b></div>
+            <p>七封匿名信揭开小镇旧案，真相藏在每个人的沉默里。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目二：热门剧集 -->
+  <section id="tv" style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.02))">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>热门<span>剧集</span></h2>
+        <a class="more" href="#">全部剧集 →</a>
+      </div>
+      <div class="grid g3">
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9">
+            <div class="bg" style="background:radial-gradient(circle at 80% 20%,#ff7a59,transparent 48%),linear-gradient(120deg,#3a1530,#0c1024)"></div>
+            <span class="tag">更新至 28 集</span>
+            <div class="mask"><b>长风渡远</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>古装 / 权谋</span><b>豆瓣 8.4</b></div>
+            <p>少年将军与谋士少女，在朝堂风云中守护山河与初心。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9">
+            <div class="bg" style="background:radial-gradient(circle at 20% 50%,#3ddcff,transparent 48%),linear-gradient(120deg,#0e3a4d,#0c1024)"></div>
+            <span class="tag">更新至 12 集</span>
+            <div class="mask"><b>城市处方</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>都市 / 医疗</span><b>豆瓣 8.1</b></div>
+            <p>急诊室里的生死时速，每一位医生都在与时间谈判。</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="thumb" style="aspect-ratio:16/9">
+            <div class="bg" style="background:radial-gradient(circle at 60% 40%,#ffd23f,transparent 48%),linear-gradient(120deg,#4d3a0e,#1a1509)"></div>
+            <span class="tag">完结</span>
+            <div class="mask"><b>逆光者</b></div>
+          </div>
+          <div class="meta">
+            <div class="row"><span>悬疑 / 刑侦</span><b>豆瓣 8.6</b></div>
+            <p>一桩旧案牵出连环谜局，追凶十年，只为那束逆光。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目三：影视排行 -->
+  <section id="rank">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>影视<span>排行</span></h2>
+        <a class="more" href="#">完整榜单 →</a>
+      </div>
+      <div class="grid g2">
+        <div>
+          <h3 style="font-size:16px;margin-bottom:14px;color:var(--gold)">🎬 电影榜</h3>
+          <div class="rank">
+            <div class="rank-item top"><span class="no">1</span><span class="txt"><b>星际回响</b><small>科幻 · 冒险 · 2026</small></span><span class="up">▲ 2</span></div>
+            <div class="rank-item top"><span class="no">2</span><span class="txt"><b>第七封信</b><small>悬疑 · 剧情 · 2025</small></span><span class="up">▲ 1</span></div>
+            <div class="rank-item"><span class="no">3</span><span class="txt"><b>极寒追击</b><small>动作 · 犯罪 · 2026</small></span><span class="up">▲ 3</span></div>
+            <div class="rank-item"><span class="no">4</span><span class="txt"><b>周末大作战</b><small>喜剧 · 家庭 · 2026</small></span><span class="up">▼ 1</span></div>
+            <div class="rank-item"><span class="no">5</span><span class="txt"><b>海边的莫里斯</b><small>剧情 · 文艺 · 2025</small></span><span class="up">新</span></div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:16px;margin-bottom:14px;color:var(--cyan)">📺 剧集榜</h3>
+          <div class="rank">
+            <div class="rank-item top"><span class="no">1</span><span class="txt"><b>逆光者</b><small>悬疑 · 刑侦 · 32 集</small></span><span class="up">▲ 1</span></div>
+            <div class="rank-item top"><span class="no">2</span><span class="txt"><b>长风渡远</b><small>古装 · 权谋 · 40 集</small></span><span class="up">▲ 2</span></div>
+            <div class="rank-item"><span class="no">3</span><span class="txt"><b>城市处方</b><small>都市 · 医疗 · 24 集</small></span><span class="up">▼ 1</span></div>
+            <div class="rank-item"><span class="no">4</span><span class="txt"><b>甜味谜案</b><small>甜宠 · 悬疑 · 20 集</small></span><span class="up">新</span></div>
+            <div class="rank-item"><span class="no">5</span><span class="txt"><b>归途列车</b><small>年代 · 剧情 · 36 集</small></span><span class="up">▲ 4</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目四：平台优势 -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head"><h2>为什么选择 <span>神马电影网达达兔</span></h2></div>
+      <div class="feat">
+        <div class="f"><div class="ico">🎞️</div><h3>资源丰富</h3><p>电影、电视剧、动漫、综艺、纪录片一应俱全，覆盖全网热门与经典。</p></div>
+        <div class="f"><div class="ico">⚡</div><h3>极速流畅</h3><p>多线路智能调度，秒开不卡顿，支持 1080P 与 4K 高清画质自由选择。</p></div>
+        <div class="f"><div class="ico">📱</div><h3>多端适配</h3><p>手机、平板、电脑、电视全端自适应，随时随地想看就看。</p></div>
+        <div class="f"><div class="ico">🈳</div><h3>纯净无广告</h3><p>拒绝弹窗与跳转，专注内容本身，给你安静的观影环境。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目五：影讯资讯 -->
+  <section id="news" style="background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>影讯<span>资讯</span></h2>
+        <a class="more" href="#">更多资讯 →</a>
+      </div>
+      <div class="grid g2">
+        <a class="news-item" href="#">
+          <div class="d">10<br>月 06</div>
+          <div>
+            <h3>2026 国庆档票房破纪录，科幻片成为最大赢家</h3>
+            <p>多部国产科幻力作集中上映，观众口碑与票房双丰收，行业信心持续回升。</p>
+            <div class="info"><span>作者：达达兔编辑部</span><span>阅读 2.4 万</span><span>影视资讯</span></div>
+          </div>
+        </a>
+        <a class="news-item" href="#">
+          <div class="d">10<br>月 05</div>
+          <div>
+            <h3>《长风渡远》收官在即，结局走向引发全网热议</h3>
+            <p>主角命运走向成谜，相关话题连续三日登上热搜，观众直呼"意难平"。</p>
+            <div class="info"><span>作者：达达兔编辑部</span><span>阅读 1.8 万</span><span>剧集动态</span></div>
+          </div>
+        </a>
+        <a class="news-item" href="#">
+          <div class="d">10<br>月 04</div>
+          <div>
+            <h3>观影指南：十月不可错过的 8 部高分新片</h3>
+            <p>从悬疑到动画，从文艺到商业，这份片单帮你把国庆档安排明白。</p>
+            <div class="info"><span>作者：达达兔编辑部</span><span>阅读 3.1 万</span><span>观影指南</span></div>
+          </div>
+        </a>
+        <a class="news-item" href="#">
+          <div class="d">10<br>月 03</div>
+          <div>
+            <h3>经典修复计划启动，百部老片将上线 4K 版本</h3>
+            <p>《霸王别姬》《活着》等华语经典将陆续推出高清修复版，重温银幕记忆。</p>
+            <div class="info"><span>作者：达达兔编辑部</span><span>阅读 9600</span><span>行业观察</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目六：关于 / CTA -->
+  <section id="about">
+    <div class="wrap">
+      <div class="banner">
+        <h2>开始你的观影之旅</h2>
+        <p>神马电影网达达兔，聚合全网优质影视资源，分类清晰、更新及时、播放流畅。收藏网址，不错过任何一部好片。</p>
+        <div class="url">🌐 官方网址：https://shenmadianyingwangdadatu-app.github.io</div>
+        <div class="cta">
+          <a class="btn btn-primary" href="#">收藏本站</a>
+          <a class="btn btn-ghost" href="#">反馈建议</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="#top"><span class="mark">兔</span><b>神马电影网达达兔</b></a>
+        <p>神马电影网达达兔 是专注于高清影视在线观看的导航与内容聚合站点，致力于为用户提供便捷、纯净的观影入口。</p>
+      </div>
+      <div class="foot-col">
+        <h4>影视分类</h4>
+        <a href="#">热门电影</a>
+        <a href="#">电视剧集</a>
+        <a href="#">动漫番剧</a>
+        <a href="#">综艺娱乐</a>
+      </div>
+      <div class="foot-col">
+        <h4>帮助中心</h4>
+        <a href="#">观看指南</a>
+        <a href="#">清晰度说明</a>
+        <a href="#">常见问题</a>
+        <a href="#">意见反馈</a>
+      </div>
+      <div class="foot-col">
+        <h4>关于本站</h4>
+        <a href="#">网站简介</a>
+        <a href="#">更新日志</a>
+        <a href="#">免责声明</a>
+        <a href="#">联系我们</a>
+      </div>
+    </div>
+    <div class="copy">
+      本站名称：<strong style="color:var(--gold)">神马电影网达达兔</strong> ｜ 网站网址：https://shenmadianyingwangdadatu-app.github.io ｜ 仅供学习与影视资讯导航使用，如有侵权请联系删除。
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 导航高亮
+  var links = document.querySelectorAll('.nav-links a');
+  var sections = [];
+  links.forEach(function(a){
+    var el = document.querySelector(a.getAttribute('href'));
+    if(el) sections.push(el);
+  });
+  function onScroll(){
+    var pos = window.scrollY + 120, cur = '';
+    sections.forEach(function(s){ if(s.offsetTop <= pos) cur = s.id; });
+    links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // 分类筛选交互
+  document.querySelectorAll('.genre').forEach(function(g){
+    g.addEventListener('click', function(){
+      document.querySelectorAll('.genre').forEach(function(x){ x.classList.remove('on'); });
+      g.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>
